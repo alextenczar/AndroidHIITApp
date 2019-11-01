@@ -11,13 +11,31 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.android.timerproject.*;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.timerproject.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.content.Intent;
+import com.google.android.material.snackbar.*;
+
 
 import com.example.android.timerproject.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    FloatingActionButton fab;
+    RecyclerView recyclerView;
 
+    List<Timer> timers = new ArrayList<Timer>();
+
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -30,6 +48,21 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        //FAB
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), timerCreator.class);
+                startActivity(intent);
+            }
+        });
+
+        //RecyclerView
+        recyclerView = (RecyclerView) root.findViewById(R.id.timerList);
+
+
         return root;
     }
 }

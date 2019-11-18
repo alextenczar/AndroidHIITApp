@@ -52,6 +52,7 @@
         android:background="@drawable/btn_rounded"
         android:text="Save Timer"
         android:textColor="#FFFFFF"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -106,7 +107,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/trainingsecondsInput"
+        android:id="@+id/trainsecondsInput"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_marginStart="287dp"
@@ -139,7 +140,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
+        android:id="@+id/timerName"
         android:layout_width="283dp"
         android:layout_height="45dp"
         android:layout_marginStart="64dp"
@@ -149,6 +151,7 @@
         android:layout_marginRight="64dp"
         android:hint="Timer Name"
         android:singleLine="true"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

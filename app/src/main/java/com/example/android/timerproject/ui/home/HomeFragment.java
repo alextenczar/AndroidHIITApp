@@ -1,9 +1,12 @@
 package com.example.android.timerproject.ui.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,11 +23,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.content.Intent;
 import com.google.android.material.snackbar.*;
 
-
-import com.example.android.timerproject.R;
-
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import com.example.android.timerproject.R;
 
 public class HomeFragment extends Fragment {
 
@@ -32,12 +37,17 @@ public class HomeFragment extends Fragment {
     FloatingActionButton fab;
     RecyclerView recyclerView;
 
-    List<Timer> timers = new ArrayList<Timer>();
+    private CustomListAdapter mAdapter;
+    private ListView listView;
+    private ArrayList<Timer> timers = new ArrayList<>();
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -49,20 +59,53 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        listView = (ListView) root.findViewById(R.id.list_view);
+
+
+
+
+
+
+
+
+
+
+
         //FAB
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), timerCreator.class);
-                startActivity(intent);
+                startActivityForResult(new Intent(getActivity(), timerCreator.class), 1001);//2 is request code
             }
         });
 
-        //RecyclerView
-        recyclerView = (RecyclerView) root.findViewById(R.id.timerList);
-
-
         return root;
+
+
+
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
+            //Intent intent2 = getActivity().getIntent();
+            //Bundle bundle = intent2.getBundleExtra("bundle");
+
+            //Timer t = (Timer) getActivity().getIntent().getSerializableExtra("object");
+            Timer t = (Timer) data.getSerializableExtra("object");
+
+            System.out.println(t.getClass().getName());
+
+            timers.add(t);
+            mAdapter = new CustomListAdapter(getActivity(), timers);
+            listView.setAdapter(mAdapter);
+
+
+        }
+    }
+
 }
+
